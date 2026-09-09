@@ -35,9 +35,7 @@ button { font: inherit; }
 .mark { display: inline-flex; align-items: center; gap: 12px; color: #f8f6ed; font-size: 18px; font-weight: 700; letter-spacing: -0.04em; }
 .mark > span:last-child { display: flex; align-items: baseline; gap: 6px; }
 .mark small { font-family: var(--mono); font-size: 7px; font-weight: 400; letter-spacing: .15em; opacity: .7; }
-.mark__symbol { position: relative; width: 24px; height: 24px; transform: rotate(-7deg); }
-.mark__symbol i { position: absolute; left: 10px; width: 5px; height: 24px; background: var(--lime); transform: skew(-18deg); }
-.mark__symbol i:last-child { transform: skew(18deg); }
+.mark__symbol { width: 38px; height: 32px; object-fit: contain; }
 .mark--light { color: var(--paper); }
 .nav__links { display: flex; align-items: center; gap: 32px; }
 .nav__links > a { color: rgba(248, 246, 237, .72); font-size: 13px; transition: color .2s; }
@@ -187,6 +185,7 @@ h1 em, h2 em { color: var(--lime); font-style: italic; font-weight: 400; font-fa
 .contact__reassurance { margin-top: 18px; color: rgba(242,240,232,.46); font: 400 8px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
 footer { padding: 70px 0 25px; color: var(--paper); background: var(--ink); }
 .footer__top { min-height: 170px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: start; }
+.footer-logo { width: 120px; height: 110px; object-fit: contain; object-position: left top; }
 .footer__top p { margin: 0; color: rgba(242,240,232,.55); font-size: 14px; line-height: 1.55; }
 .footer__top > div { display: flex; flex-direction: column; gap: 15px; }
 .footer__top > div span { color: rgba(242,240,232,.4); font: 400 8px var(--mono); letter-spacing: .1em; }

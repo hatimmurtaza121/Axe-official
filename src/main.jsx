@@ -3,13 +3,13 @@ import { createRoot } from 'react-dom/client'
 import heroArtwork from './assets/axe-automation-hero.png'
 import './styles.css'
 
-const contactEmail = 'info@axe-official.com'
+const contactEmail = 'info@axeofficial.com'
 const instagramUrl = 'https://instagram.com/axe.0fficial'
 
 function Mark({ light = false }) {
   return (
     <a className={`mark ${light ? 'mark--light' : ''}`} href="/" aria-label="Axe Official home">
-      <span className="mark__symbol" aria-hidden="true"><i /><i /></span>
+      <img className="mark__symbol" src="/brand/axe-icon.svg" alt="" />
       <span>AXE<small>OFFICIAL</small></span>
     </a>
   )
@@ -324,11 +324,11 @@ function CareersPage() {
                     <p className="job__blurb">{job.blurb}</p>
                     <div className="tag-row">{job.skills.map(skill => <span key={skill}>{skill}</span>)}</div>
                   </div>
-                  <a href={`mailto:careers@axe-official.com?subject=Application%20—%20${encodeURIComponent(job.title)}`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
+                  <a href={`mailto:careers@axeofficial.com?subject=Application%20—%20${encodeURIComponent(job.title)}`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
                 </article>
               ))}
             </div>
-            <p className="openings__note">Don’t see your exact role? If you can make Axe sharper, write to <a href="mailto:careers@axe-official.com">careers@axe-official.com</a>.</p>
+            <p className="openings__note">Don’t see your exact role? If you can make Axe sharper, write to <a href="mailto:careers@axeofficial.com">careers@axeofficial.com</a>.</p>
           </div>
         </section>
       </main>
@@ -358,20 +358,20 @@ function Footer() {
   return (
     <footer>
       <div className="wrap footer__top">
-        <Mark light />
+        <a href="/" aria-label="Axe Official home"><img className="footer-logo" src="/brand/axe-full.svg" alt="Axe Official — Automation for real growth" /></a>
         <p>AI-first software for<br />operations that refuse to stand still.</p>
         <div><span>START A PROJECT</span><a href={`mailto:${contactEmail}`}>{contactEmail} <Arrow diagonal /></a></div>
       </div>
       <div className="wrap footer__bottom">
         <span>© {new Date().getFullYear()} AXE OFFICIAL</span>
         <div><a href={instagramUrl} target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="/careers.html">CAREERS</a></div>
-        <span>axe-official.com</span>
+        <span>axeofficial.com</span>
       </div>
     </footer>
   )
 }
 
-function App() {
+export default function App() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('is-visible')),
