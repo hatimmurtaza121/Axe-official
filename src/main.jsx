@@ -7,6 +7,8 @@ import '@fontsource/manrope/latin-700.css'
 import '@fontsource/dm-mono/latin-400.css'
 import '@fontsource/dm-mono/latin-500.css'
 import heroArtwork from './assets/axe-automation-hero.webp'
+import vendorAxeScreenshot from './assets/vendor-axe-erp.webp'
+import vendorAxeModules from './assets/vendor-axe-modules.webp'
 import './styles.css'
 
 const contactEmail = 'info@axeofficial.com'
@@ -125,8 +127,8 @@ function WorkflowVisual() {
   return (
     <div className="workflow-card" role="group" aria-label="Illustration of an automated customer workflow">
       <div className="workflow-card__top">
-        <span><i className="live-dot" /> System live</span>
-        <span className="mono">AXE / OPS-01</span>
+        <span><i className="live-dot" /> Verified case result</span>
+        <span className="mono">CSR / CASE 001</span>
       </div>
       <div className="workflow-card__metric">
         <span>AVERAGE SERVICE TIME</span>
@@ -143,10 +145,10 @@ function WorkflowVisual() {
         ))}
       </div>
       <div className="workflow-card__footer">
-        <span>Human touchpoints</span>
-        <b>01</b>
-        <span>Steps automated</span>
-        <b>18</b>
+        <span>Previous average</span>
+        <b>4m</b>
+        <span>New average</span>
+        <b>&lt;20s</b>
       </div>
     </div>
   )
@@ -195,9 +197,10 @@ function HomePage() {
           </div>
           <div className="wrap fit-strip reveal">
             <span>BEST FIT</span>
+            <p>Manufacturers & distributors</p>
+            <p>Service businesses</p>
             <p>Operations-heavy teams</p>
-            <p>Document-driven businesses</p>
-            <p>Companies outgrowing spreadsheets</p>
+            <p>Startups outgrowing spreadsheets</p>
           </div>
         </section>
 
@@ -211,28 +214,28 @@ function HomePage() {
               <article className="service-card service-card--accent reveal">
                 <span className="service-card__number">01</span>
                 <div className="service-card__icon flow-icon" aria-hidden="true"><i /><i /><i /></div>
-                <h3>Workflow automation</h3>
+                <h3>Remove repetitive operations</h3>
                 <p>Multi-step processes that validate, route, update, notify, and complete themselves—with human approval only where it matters.</p>
                 <ul><li>Operations & finance</li><li>Documents & data entry</li><li>Cross-tool integrations</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">02</span>
                 <div className="service-card__icon window-icon" aria-hidden="true"><i /><i /><i /></div>
-                <h3>Internal apps & portals</h3>
+                <h3>Replace spreadsheet operations</h3>
                 <p>One calm, purpose-built workspace for your team, clients, sites, records, and approvals—without the spreadsheet sprawl.</p>
                 <ul><li>Operations dashboards</li><li>Client & site portals</li><li>Role-based access</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">03</span>
                 <div className="service-card__icon spark-icon" aria-hidden="true"><i /><i /></div>
-                <h3>Applied AI systems</h3>
+                <h3>Automate document & visual work</h3>
                 <p>Production AI that reads, reasons, and acts inside real workflows. Self-hosted when the data, latency, or economics demand it.</p>
                 <ul><li>Document intelligence</li><li>Computer vision</li><li>Private AI infrastructure</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">04</span>
                 <div className="service-card__icon globe-icon" aria-hidden="true"><i /><i /></div>
-                <h3>Digital products</h3>
+                <h3>Launch software customers use</h3>
                 <p>Websites and software products with a sharp interface, conversion-aware thinking, and an architecture ready to grow.</p>
                 <ul><li>Business websites</li><li>Custom web apps</li><li>Scalable foundations</li></ul>
               </article>
@@ -247,7 +250,7 @@ function HomePage() {
               <h2>Less friction.<br /><em>More throughput.</em></h2>
             </div>
             <article className="case case--featured reveal">
-              <div className="case__topline"><span>OPERATIONS AUTOMATION / CSR</span><span>CASE 001</span></div>
+              <div className="case__topline"><span>ANONYMIZED CLIENT / CUSTOMER SERVICE BUSINESS</span><span>CASE 001</span></div>
               <div className="case__content">
                 <div className="case__metric">
                   <span>Average time to serve</span>
@@ -255,7 +258,12 @@ function HomePage() {
                 </div>
                 <div className="case__story">
                   <h3>From waiting minutes<br />to moving in seconds.</h3>
-                  <p>We rebuilt a CSR company’s operational and finance workflows around a custom internal app. Repetitive steps disappeared, handoffs tightened, and the average customer service time dropped by more than 90%.</p>
+                  <dl className="case-facts">
+                    <div><dt>Problem</dt><dd>Manual operations and finance steps held average customer service time at four minutes.</dd></div>
+                    <div><dt>Solution</dt><dd>A custom internal app connected the workflow and removed repetitive handoffs.</dd></div>
+                    <div><dt>Timeline</dt><dd>Not publicly disclosed.</dd></div>
+                    <div><dt>Measured result</dt><dd>Average service time fell to under 20 seconds—a reduction of more than 90%.</dd></div>
+                  </dl>
                   <div className="tag-row"><span>INTERNAL APP</span><span>FINANCE OPS</span><span>AUTOMATION</span></div>
                 </div>
               </div>
@@ -264,19 +272,47 @@ function HomePage() {
               <article className="case case--small reveal">
                 <div className="case__topline"><span>NOOR CHEMICALS / WATERPROOFING</span><span>CASE 002</span></div>
                 <h3>One operating system for sites, clients, and documents.</h3>
-                <p>For a waterproofing business serving residential, commercial, and industrial projects, we created a full internal portal to manage sites and clients—replacing manual entries and document generation with connected, repeatable workflows.</p>
+                <dl className="case-facts">
+                  <div><dt>Problem</dt><dd>Site, client, data-entry, and document work was spread across manual processes.</dd></div>
+                  <div><dt>Solution</dt><dd>A full internal portal connected site and client management with automated entries and document generation.</dd></div>
+                  <div><dt>Timeline</dt><dd>Not publicly disclosed.</dd></div>
+                  <div><dt>Outcome</dt><dd>One repeatable operating flow with fewer manual steps and faster document handling.</dd></div>
+                </dl>
                 <a className="case-link" href="https://noorchemical.com/" target="_blank" rel="noreferrer">Visit Noor Chemicals <Arrow diagonal /></a>
                 <div className="case-diagram" aria-hidden="true">
                   <span>SITES</span><i /><span>AXE CORE</span><i /><span>CLIENTS</span>
                 </div>
               </article>
               <article className="case case--small case--visual reveal">
-                <div className="case__topline"><span>PRIVATE AI INFRASTRUCTURE</span><span>CASE 003</span></div>
+                <div className="case__topline"><span>ANONYMIZED CLIENT / PRIVATE AI INFRASTRUCTURE</span><span>CASE 003</span></div>
                 <h3>Computer vision,<br />kept close to the data.</h3>
-                <p>A visual challenge-recognition system deployed on a client-managed local GPU for low-latency, private inference.</p>
+                <p>A visual challenge-recognition system deployed on a client-managed local GPU for private, low-latency inference. Its public description intentionally excludes third-party access-control bypass details.</p>
                 <div className="vision-grid" aria-hidden="true">{Array.from({ length: 24 }).map((_, i) => <i key={i} />)}</div>
               </article>
             </div>
+            <article className="case case--product reveal">
+              <div className="case__topline"><span>VENDOR AXE / SUBSCRIPTION ERP</span><span>CASE 004</span></div>
+              <div className="case-product">
+                <div className="case-product__story">
+                  <p className="section-label">AXE-BUILT PRODUCT</p>
+                  <h3>Major ERP workflows.<br />One calm subscription.</h3>
+                  <dl className="case-facts">
+                    <div><dt>Problem</dt><dd>Shops, distributors, and makers need shared control of stock, orders, manufacturing, and money without assembling disconnected tools.</dd></div>
+                    <div><dt>Solution</dt><dd>A multi-tenant ERP spanning inventory, sales and purchasing, accounts, transactions, orders, returns, manufacturing, ledgers, reports, exports, and white-labeling.</dd></div>
+                    <div><dt>Delivery</dt><dd>An ongoing subscription product with guided onboarding and configurable modules.</dd></div>
+                    <div><dt>Outcome</dt><dd>A production PWA sold in Essentials, Complete, and Tailored plans, with tenant data isolated through row-level security.</dd></div>
+                  </dl>
+                  <a className="case-link" href="https://vendoraxe.com/" target="_blank" rel="noreferrer">Explore Vendor Axe <Arrow diagonal /></a>
+                </div>
+                <figure>
+                  <div className="case-gallery">
+                    <img src={vendorAxeScreenshot} alt="Vendor Axe product website showing its inventory command center" />
+                    <img src={vendorAxeModules} alt="Vendor Axe subscription plans listing ERP modules" />
+                  </div>
+                  <figcaption>Live Vendor Axe product pages · September 2026</figcaption>
+                </figure>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -288,10 +324,10 @@ function HomePage() {
             </div>
             <div className="principle-grid">
               {[
-                ['01', 'Minimal touch', 'Automate the repeatable. Keep people in control of the decisions that carry risk or nuance.'],
-                ['02', 'Secure by design', 'Access, data boundaries, auditability, and failure modes are designed before launch—not patched in later.'],
-                ['03', 'Ready to scale', 'We build for the next order of magnitude, without burdening today’s project with needless complexity.'],
-                ['04', 'Owned by you', 'Clear systems, documented logic, and no mystery layer between your business and the software running it.'],
+                ['01', 'Controlled automation', 'Automate the repeatable. Keep people in control of decisions that carry risk, money, or nuance.'],
+                ['02', 'Secure & confidential', 'Access, data boundaries, auditability, and agreed confidentiality controls are designed before launch.'],
+                ['03', 'Tested & monitored', 'Critical paths get automated checks, release review, monitoring, and recovery-ready backups where required.'],
+                ['04', 'Owned & supported', 'Documented logic, handover-ready systems, no mystery lock-in, and an option for ongoing post-launch support.'],
               ].map(([n, title, text]) => (
                 <article key={title} className="principle reveal">
                   <span>{n}</span><h3>{title}</h3><p>{text}</p>
@@ -308,7 +344,7 @@ function HomePage() {
               <h2>Prove the value.<br />Then <em>compound it.</em></h2>
               <p className="process__intro">No months of theatre before something works. We choose a meaningful workflow, ship the smallest complete system, measure it, and expand from evidence.</p>
               <div className="engagement-paths" aria-label="Ways to work with Axe">
-                <span>Workflow audit</span><span>Focused automation</span><span>Internal platform</span>
+                <span>Workflow audit</span><span>Focused automation</span><span>Internal platform</span><span>Ongoing automation partner</span>
               </div>
               <a className="text-link" href={`mailto:${contactEmail}?subject=Map%20my%20workflow`}>Map your first workflow <Arrow /></a>
             </div>
@@ -452,7 +488,7 @@ function Contact() {
       `Name: ${data.get('name')}`,
       `Company: ${data.get('company')}`,
       `Work email: ${data.get('email')}`,
-      `Area: ${data.get('area')}`,
+      `Approximate monthly volume: ${data.get('volume')}`,
       '',
       'Workflow or bottleneck:',
       data.get('bottleneck'),
@@ -470,9 +506,9 @@ function Contact() {
           <h2>Show us the work<br />your team <em>hates doing.</em></h2>
           <p>We’ll help identify the first workflow worth automating—based on time saved, risk removed, and value created.</p>
           <div className="contact__promise">
-            <span>01</span><p>A focused first conversation</p>
-            <span>02</span><p>A practical opportunity map</p>
-            <span>03</span><p>No obligation to build with us</p>
+            <span>01</span><p>We review the workflow and volume</p>
+            <span>02</span><p>A short call clarifies constraints and value</p>
+            <span>03</span><p>You receive a free workflow opportunity map</p>
           </div>
         </div>
         <form className="brief-form reveal" onSubmit={handleSubmit}>
@@ -481,10 +517,10 @@ function Contact() {
             <label>Work email<input name="email" type="email" autoComplete="email" required /></label>
           </div>
           <label>Company<input name="company" autoComplete="organization" required /></label>
-          <label>Where is the friction?
-            <select name="area" defaultValue="Operations">
-              <option>Operations</option><option>Finance</option><option>Customer service</option>
-              <option>Documents & data</option><option>Internal software</option><option>Something else</option>
+          <label>Approximate monthly volume
+            <select name="volume" defaultValue="Not sure yet">
+              <option>Under 100 items</option><option>100–1,000 items</option><option>1,000–10,000 items</option>
+              <option>More than 10,000 items</option><option>Not sure yet</option>
             </select>
           </label>
           <label>Describe the workflow
@@ -492,6 +528,7 @@ function Contact() {
           </label>
           <button className="button button--lime" type="submit">Prepare project brief <Arrow /></button>
           <p className="brief-form__note">This opens your email app with the brief prepared. Nothing is uploaded or tracked.</p>
+          <a className="brief-form__calendar" href={`mailto:${contactEmail}?subject=Send%20me%20a%20calendar%20link`}>Prefer to choose a time? Request the calendar link <Arrow diagonal /></a>
         </form>
       </div>
     </section>
