@@ -6,18 +6,23 @@ import { usePathname } from 'next/navigation'
 import { Arrow } from './Arrow'
 import { Mark } from './Mark'
 
-function NavForPath({ pathname }: { pathname: string }) {
+export function Nav() {
+  const pathname = usePathname()
   const isHome = pathname === '/'
   const [open, setOpen] = useState(false)
+  const [menuPath, setMenuPath] = useState(pathname)
   const menuRef = useRef<HTMLDivElement>(null)
-  const navRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    if (!open || !menuRef.current || !navRef.current || !toggleRef.current) return undefined
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
+    setOpen(false)
+  }
 
-    const background = document.querySelectorAll<HTMLElement>('main, footer')
-    const focusable = [...navRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')]
+  useEffect(() => {
+    if (!open || !menuRef.current || !toggleRef.current) return undefined
+
+    const focusable = [toggleRef.current, ...menuRef.current.querySelectorAll('a')]
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false)
@@ -37,12 +42,10 @@ function NavForPath({ pathname }: { pathname: string }) {
     }
 
     document.body.classList.add('menu-open')
-    background.forEach((element) => element.setAttribute('inert', ''))
     menuRef.current.querySelector('a')?.focus()
     window.addEventListener('keydown', handleKeyDown)
     return () => {
       document.body.classList.remove('menu-open')
-      background.forEach((element) => element.removeAttribute('inert'))
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [open])
@@ -50,13 +53,7 @@ function NavForPath({ pathname }: { pathname: string }) {
   return (
     <header className="nav-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <nav
-        ref={navRef}
-        className="nav wrap"
-        aria-label={open ? 'Site menu' : 'Main navigation'}
-        role={open ? 'dialog' : undefined}
-        aria-modal={open || undefined}
-      >
+      <nav className="nav wrap" aria-label="Main navigation">
         <Mark />
         <button
           ref={toggleRef}
@@ -80,9 +77,4 @@ function NavForPath({ pathname }: { pathname: string }) {
       </nav>
     </header>
   )
-}
-
-export function Nav() {
-  const pathname = usePathname()
-  return <NavForPath key={pathname} pathname={pathname} />
 }

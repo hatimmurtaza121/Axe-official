@@ -7,13 +7,10 @@ import { Arrow } from './Arrow'
 
 type FieldName = 'name' | 'email' | 'phone' | 'company' | 'bottleneck'
 
-type VolumeOption = (typeof volumeOptions)[number]
-
-function VolumeSelect({ value, onChange }: { value: VolumeOption; onChange: (value: VolumeOption) => void }) {
+function VolumeSelect() {
   const [open, setOpen] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(() => volumeOptions.indexOf(value))
+  const [value, setValue] = useState<(typeof volumeOptions)[number]>('Not sure yet')
   const selectRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const closeOnOutsideClick = (event: PointerEvent) => {
@@ -23,15 +20,9 @@ function VolumeSelect({ value, onChange }: { value: VolumeOption; onChange: (val
     return () => document.removeEventListener('pointerdown', closeOnOutsideClick)
   }, [])
 
-  const openMenu = (index = volumeOptions.indexOf(value)) => {
-    setActiveIndex(index)
-    setOpen(true)
-  }
-
-  const choose = (option: VolumeOption) => {
-    onChange(option)
+  const choose = (option: (typeof volumeOptions)[number]) => {
+    setValue(option)
     setOpen(false)
-    triggerRef.current?.focus()
   }
 
   return (
@@ -39,66 +30,40 @@ function VolumeSelect({ value, onChange }: { value: VolumeOption; onChange: (val
       ref={selectRef}
       className={`custom-select ${open ? 'is-open' : ''}`}
       onKeyDown={(event) => {
-        const currentIndex = activeIndex < 0 ? 0 : activeIndex
-        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-          event.preventDefault()
-          if (!open) {
-            openMenu(event.key === 'ArrowDown' ? volumeOptions.indexOf(value) : volumeOptions.length - 1)
-            return
-          }
-          const direction = event.key === 'ArrowDown' ? 1 : -1
-          setActiveIndex((currentIndex + direction + volumeOptions.length) % volumeOptions.length)
-        } else if (event.key === 'Home' || event.key === 'End') {
-          if (!open) return
-          event.preventDefault()
-          setActiveIndex(event.key === 'Home' ? 0 : volumeOptions.length - 1)
-        } else if ((event.key === 'Enter' || event.key === ' ') && open) {
-          event.preventDefault()
-          choose(volumeOptions[currentIndex])
-        } else if (event.key === 'Escape' && open) {
-          event.preventDefault()
+        if (event.key === 'Escape') {
           setOpen(false)
-          triggerRef.current?.focus()
-        } else if (event.key === 'Tab') {
-          setOpen(false)
+          selectRef.current?.querySelector('button')?.focus()
         }
       }}
     >
       <input type="hidden" name="volume" value={value} />
       <button
-        ref={triggerRef}
         className="custom-select__trigger"
         type="button"
-        role="combobox"
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-controls="volume-options"
-        aria-labelledby="volume-label volume-value"
-        aria-activedescendant={open ? `volume-option-${activeIndex}` : undefined}
-        onClick={() => {
-          if (open) setOpen(false)
-          else openMenu()
-        }}
+        aria-label={`Approximate monthly volume: ${value}`}
+        onClick={() => setOpen((current) => !current)}
       >
-        <span id="volume-value">{value}</span><i aria-hidden="true" />
+        <span>{value}</span><i aria-hidden="true" />
       </button>
       {open && (
-        <div id="volume-options" className="custom-select__menu" role="listbox" aria-labelledby="volume-label">
-          {volumeOptions.map((option, index) => (
-            <div
+        <div className="custom-select__menu" role="listbox" aria-labelledby="volume-label">
+          {volumeOptions.map((option) => (
+            <button
               key={option}
-              id={`volume-option-${index}`}
+              type="button"
               role="option"
               aria-selected={value === option}
-              className={activeIndex === index ? 'is-active' : ''}
-              onPointerMove={() => setActiveIndex(index)}
-              onPointerDown={(event) => {
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={(event) => {
                 event.preventDefault()
+                event.stopPropagation()
                 choose(option)
               }}
             >
               {option}
-            </div>
+            </button>
           ))}
         </div>
       )}
@@ -110,13 +75,8 @@ export function Contact() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
-  const [volume, setVolume] = useState<VolumeOption>('Not sure yet')
 
   const clearError = (field: FieldName) => {
-    if (status !== 'sending' && status !== 'idle') {
-      setStatus('idle')
-      setStatusMessage('')
-    }
     setErrors((current) => {
       if (!current[field]) return current
       const next = { ...current }
@@ -183,10 +143,9 @@ export function Contact() {
 
       setStatus('sent')
       setStatusMessage(intent === 'calendar'
-        ? 'We’ll send a scheduling link to your work email so you can choose a suitable time.'
-        : 'Your brief is safely with Axe Official. We’ll review the workflow and reply with the clearest next step.')
+        ? 'Request sent. We’ll reply with a calendar link.'
+        : 'Brief sent. We’ll review it and get back to you.')
       form.reset()
-      setVolume('Not sure yet')
     } catch {
       setStatus('error')
       setStatusMessage('We could not send the brief. Please try again.')
@@ -243,15 +202,8 @@ export function Contact() {
             </label>
           </div>
           <div className="field">
-            <span id="volume-label">Workflow volume per month</span>
-            <span className="field-help" id="volume-help">Estimated runs, records, or items handled each month.</span>
-            <VolumeSelect value={volume} onChange={(nextVolume) => {
-              setVolume(nextVolume)
-              if (status !== 'sending' && status !== 'idle') {
-                setStatus('idle')
-                setStatusMessage('')
-              }
-            }} />
+            <span id="volume-label">Approximate monthly volume</span>
+            <VolumeSelect />
           </div>
           <label>Describe the workflow
             <textarea
@@ -277,17 +229,10 @@ export function Contact() {
           <button className="button button--lime" type="submit" disabled={status === 'sending'}>
             {status === 'sending' ? 'Sending brief' : 'Prepare project brief'} <Arrow />
           </button>
-          {status === 'sent' && statusMessage && (
-            <div className="brief-form__success" role="status" aria-live="polite">
-              <span className="brief-form__success-icon" aria-hidden="true">✓</span>
-              <div>
-                <strong>{statusMessage.startsWith('We’ll send') ? 'Calendar request received' : 'Project brief received'}</strong>
-                <p>{statusMessage}</p>
-              </div>
-            </div>
-          )}
-          {status === 'error' && statusMessage && (
-            <p className="brief-form__status is-error" role="alert">{statusMessage}</p>
+          {statusMessage && (
+            <p className={`brief-form__status ${status === 'error' ? 'is-error' : ''}`} role="status">
+              {statusMessage}
+            </p>
           )}
           <p className="brief-form__note">Your brief is sent to Axe Official. Nothing is used for ads or tracking.</p>
           <button

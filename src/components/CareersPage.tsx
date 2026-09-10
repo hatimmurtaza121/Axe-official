@@ -1,14 +1,6 @@
 import { jobs, site } from '@/lib/site'
 import { Arrow } from './Arrow'
 
-function applicationHref(role: string) {
-  const subject = encodeURIComponent(`Application — ${role}`)
-  const body = encodeURIComponent(
-    `Hello Axe Official,\n\nI’m applying for the ${role} role.\n\nI’ve attached my CV or portfolio and included a short note about why the role fits.\n\nThank you.`,
-  )
-  return `mailto:${site.careersEmail}?subject=${subject}&body=${body}`
-}
-
 export function CareersPage() {
   return (
     <main id="main-content">
@@ -56,10 +48,6 @@ export function CareersPage() {
                   <p>{job.type}</p>
                   <h3>{job.title}</h3>
                   <p className="job__blurb">{job.blurb}</p>
-                  <div className="job__meta" aria-label="Role location and engagement">
-                    <span>Remote / location agreed per project</span>
-                    <span>Project-based or ongoing</span>
-                  </div>
                   <div className="tag-row">{job.skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
                 </div>
                 <details className="job__details">
@@ -75,10 +63,7 @@ export function CareersPage() {
                     </section>
                   </div>
                 </details>
-                <div className="job__apply">
-                  <a href={applicationHref(job.title)} aria-label={`Apply for ${job.title}`}>Apply by email <Arrow diagonal /></a>
-                  <p>Send a CV or portfolio and a short fit note. If your mail app does not open, write to <a href={`mailto:${site.careersEmail}`}>{site.careersEmail}</a>.</p>
-                </div>
+                <a href={`mailto:${site.careersEmail}?subject=Application%20—%20${encodeURIComponent(job.title)}&body=Please%20include%20your%20CV%20or%20portfolio%20and%20a%20short%20note%20about%20why%20this%20role%20fits.`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
               </article>
             ))}
           </div>

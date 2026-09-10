@@ -67,28 +67,28 @@ export function HomePage() {
             <div className="service-grid">
               <article className="service-card service-card--accent reveal">
                 <span className="service-card__number">01</span>
-                <div className="service-card__icon flow-icon" aria-hidden="true"><span /><span /><span /></div>
+                <div className="service-card__icon flow-icon" aria-hidden="true"><i /><i /><i /></div>
                 <h3>Remove repetitive operations</h3>
                 <p>Multi-step processes that validate, route, update, notify, and complete themselves—with human approval only where it matters.</p>
                 <ul><li>Operations & finance</li><li>Documents & data entry</li><li>Cross-tool integrations</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">02</span>
-                <div className="service-card__icon window-icon" aria-hidden="true"><span /><span /><span /></div>
+                <div className="service-card__icon window-icon" aria-hidden="true"><i /><i /><i /></div>
                 <h3>Replace spreadsheet operations</h3>
                 <p>One calm, purpose-built workspace for your team, clients, sites, records, and approvals—without the spreadsheet sprawl.</p>
                 <ul><li>Operations dashboards</li><li>Client & site portals</li><li>Role-based access</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">03</span>
-                <div className="service-card__icon spark-icon" aria-hidden="true"><span /><span /></div>
+                <div className="service-card__icon spark-icon" aria-hidden="true"><i /><i /></div>
                 <h3>Automate document & visual work</h3>
                 <p>Production AI that reads, reasons, and acts inside real workflows. Self-hosted when the data, latency, or economics demand it.</p>
                 <ul><li>Document intelligence</li><li>Computer vision</li><li>Private AI infrastructure</li></ul>
               </article>
               <article className="service-card reveal">
                 <span className="service-card__number">04</span>
-                <div className="service-card__icon globe-icon" aria-hidden="true"><span /><span /></div>
+                <div className="service-card__icon globe-icon" aria-hidden="true"><i /><i /></div>
                 <h3>Launch software customers use</h3>
                 <p>Websites and software products with a sharp interface, conversion-aware thinking, and an architecture ready to grow.</p>
                 <ul><li>Business websites</li><li>Custom web apps</li><li>Scalable foundations</li></ul>
@@ -140,7 +140,7 @@ export function HomePage() {
               <article className="case case--small case--visual reveal">
                 <div className="case__topline"><span>ANONYMIZED CLIENT / PRIVATE AI INFRASTRUCTURE</span><span>CASE 003</span></div>
                 <h3>Computer vision,<br />kept close to the data.</h3>
-                <p>A computer-vision system deployed on a client-managed local GPU, keeping sensitive data private while delivering low-latency inference inside the operating workflow.</p>
+                <p>A visual challenge-recognition system deployed on a client-managed local GPU for private, low-latency inference. Its public description intentionally excludes third-party access-control bypass details.</p>
                 <div className="vision-grid" aria-hidden="true">{Array.from({ length: 24 }).map((_, i) => <i key={i} />)}</div>
               </article>
             </div>
