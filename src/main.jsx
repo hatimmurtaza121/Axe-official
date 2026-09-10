@@ -583,7 +583,10 @@ export default function App() {
   return <HomePage />
 }
 
-createRoot(document.getElementById('root')).render(
+const root = globalThis.__axeRoot ?? createRoot(document.getElementById('root'))
+globalThis.__axeRoot = root
+
+root.render(
   <StrictMode>
     <App />
   </StrictMode>,
