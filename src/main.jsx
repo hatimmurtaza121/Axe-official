@@ -16,7 +16,7 @@ const instagramUrl = 'https://instagram.com/axe.0fficial'
 
 function Mark({ light = false }) {
   return (
-    <a className={`mark ${light ? 'mark--light' : ''}`} href="/" aria-label="Axe Official">
+    <a className={`mark ${light ? 'mark--light' : ''}`} href="/">
       <img className="mark__symbol" src="/brand/axe-icon.webp" alt="" />
       <span>AXE<small>OFFICIAL</small></span>
     </a>
