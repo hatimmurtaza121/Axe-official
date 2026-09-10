@@ -6,6 +6,8 @@ Marketing website for Axe Official, an AI-first software house focused on workfl
 
 - `/` — company positioning, services, outcomes, delivery principles, and contact
 - `/careers.html` — culture and open roles
+- `/privacy.html` — privacy notice
+- `/terms.html` — website terms
 
 ## Local development
 

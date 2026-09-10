@@ -1,15 +1,23 @@
-import { StrictMode, useEffect, useState } from 'react'
+import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import heroArtwork from './assets/axe-automation-hero.png'
+import '@fontsource/manrope/400.css'
+import '@fontsource/manrope/500.css'
+import '@fontsource/manrope/600.css'
+import '@fontsource/manrope/700.css'
+import '@fontsource/dm-mono/400.css'
+import '@fontsource/dm-mono/500.css'
+import heroArtwork from './assets/axe-automation-hero.webp'
 import './styles.css'
 
 const contactEmail = 'info@axeofficial.com'
+const supportEmail = 'support@axeofficial.com'
+const careersEmail = 'careers@axeofficial.com'
 const instagramUrl = 'https://instagram.com/axe.0fficial'
 
 function Mark({ light = false }) {
   return (
-    <a className={`mark ${light ? 'mark--light' : ''}`} href="/" aria-label="Axe Official home">
-      <img className="mark__symbol" src="/brand/axe-icon.svg" alt="" />
+    <a className={`mark ${light ? 'mark--light' : ''}`} href="/" aria-label="Axe Official">
+      <img className="mark__symbol" src="/brand/axe-icon.webp" alt="" />
       <span>AXE<small>OFFICIAL</small></span>
     </a>
   )
@@ -21,14 +29,57 @@ function Arrow({ diagonal = false }) {
 
 function Nav({ page = 'home' }) {
   const [open, setOpen] = useState(false)
+  const menuRef = useRef(null)
+  const toggleRef = useRef(null)
+
+  useEffect(() => {
+    if (!open) return undefined
+
+    const focusable = [toggleRef.current, ...menuRef.current.querySelectorAll('a')]
+    const handleKeyDown = event => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current.focus()
+      }
+      if (event.key === 'Tab') {
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.body.classList.add('menu-open')
+    menuRef.current.querySelector('a')?.focus()
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.classList.remove('menu-open')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
   return (
     <header className="nav-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <nav className="nav wrap" aria-label="Main navigation">
         <Mark />
-        <button className="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+        <button
+          ref={toggleRef}
+          className={`menu-toggle ${open ? 'is-open' : ''}`}
+          type="button"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-controls="site-menu"
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+        >
           <span /><span />
         </button>
-        <div className={`nav__links ${open ? 'is-open' : ''}`}>
+        <div id="site-menu" ref={menuRef} className={`nav__links ${open ? 'is-open' : ''}`}>
           <a href={page === 'home' ? '#services' : '/#services'} onClick={() => setOpen(false)}>What we build</a>
           <a href={page === 'home' ? '#work' : '/#work'} onClick={() => setOpen(false)}>Selected work</a>
           <a href="/careers.html">Careers</a>
@@ -41,15 +92,38 @@ function Nav({ page = 'home' }) {
   )
 }
 
-function WorkflowVisual() {
-  const activities = [
-    ['Client request received', '00:00'],
-    ['Data verified & routed', '00:04'],
-    ['Documents generated', '00:11'],
-    ['Customer served', '< 00:20'],
+function SignalField() {
+  const paths = [
+    'M-80 190 C120 40 260 340 460 180 S760 40 980 210',
+    'M-80 230 C130 80 280 370 480 220 S770 80 980 250',
+    'M-80 270 C140 120 300 400 500 260 S790 120 980 290',
+    'M-80 310 C150 160 320 430 520 300 S810 160 980 330',
+    'M-80 350 C160 200 340 460 540 340 S830 200 980 370',
+    'M-80 390 C170 240 360 490 560 380 S850 240 980 410',
   ]
   return (
-    <div className="workflow-card" aria-label="Illustration of an automated customer workflow">
+    <svg className="signal-field" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="signal-gradient" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#2268ff" />
+          <stop offset="52%" stopColor="#68a6ff" />
+          <stop offset="100%" stopColor="#dfff64" />
+        </linearGradient>
+      </defs>
+      <g>{paths.map((path, index) => <path key={path} d={path} style={{ '--line': index }} />)}</g>
+    </svg>
+  )
+}
+
+function WorkflowVisual() {
+  const activities = [
+    ['Client request received', '00:00', 'PT0S'],
+    ['Data verified & routed', '00:04', 'PT4S'],
+    ['Documents generated', '00:11', 'PT11S'],
+    ['Customer served', '< 00:20', 'PT20S'],
+  ]
+  return (
+    <div className="workflow-card" role="group" aria-label="Illustration of an automated customer workflow">
       <div className="workflow-card__top">
         <span><i className="live-dot" /> System live</span>
         <span className="mono">AXE / OPS-01</span>
@@ -60,11 +134,11 @@ function WorkflowVisual() {
         <em>From 4 minutes</em>
       </div>
       <div className="workflow-list">
-        {activities.map(([label, time], index) => (
+        {activities.map(([label, time, dateTime], index) => (
           <div className="workflow-row" key={label}>
             <span className="workflow-index">0{index + 1}</span>
             <span>{label}</span>
-            <time>{time}</time>
+            <time dateTime={dateTime}>{time}</time>
           </div>
         ))}
       </div>
@@ -82,9 +156,10 @@ function HomePage() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="main-content">
         <section className="hero">
           <img className="hero__art" src={heroArtwork} alt="" />
+          <SignalField />
           <div className="hero__wash" />
           <div className="wrap hero__grid">
             <div className="hero__copy reveal">
@@ -115,8 +190,14 @@ function HomePage() {
             <p className="section-label">01 / THE SHIFT</p>
             <div>
               <h2 className="display-copy reveal">Your best people should not be doing work a system can do <em>better.</em></h2>
-              <p className="statement__body reveal">Every repetitive handoff adds cost, delay, and room for error. Axe studies how your business actually moves—then builds the operational layer that removes the drag.</p>
+              <p className="statement__body reveal">Every repetitive handoff adds cost, delay, and room for error. Axe studies how your business actually moves—then builds the operational layer that saves time, lowers operating cost, and removes the drag.</p>
             </div>
+          </div>
+          <div className="wrap fit-strip reveal">
+            <span>BEST FIT</span>
+            <p>Operations-heavy teams</p>
+            <p>Document-driven businesses</p>
+            <p>Companies outgrowing spreadsheets</p>
           </div>
         </section>
 
@@ -181,9 +262,10 @@ function HomePage() {
             </article>
             <div className="case-grid">
               <article className="case case--small reveal">
-                <div className="case__topline"><span>NOOR CHEMICAL</span><span>CASE 002</span></div>
+                <div className="case__topline"><span>NOOR CHEMICALS / WATERPROOFING</span><span>CASE 002</span></div>
                 <h3>One operating system for sites, clients, and documents.</h3>
-                <p>A full business portal that replaced manual entries and document preparation with connected, repeatable workflows.</p>
+                <p>For a waterproofing business serving residential, commercial, and industrial projects, we created a full internal portal to manage sites and clients—replacing manual entries and document generation with connected, repeatable workflows.</p>
+                <a className="case-link" href="https://noorchemical.com/" target="_blank" rel="noreferrer">Visit Noor Chemicals <Arrow diagonal /></a>
                 <div className="case-diagram" aria-hidden="true">
                   <span>SITES</span><i /><span>AXE CORE</span><i /><span>CLIENTS</span>
                 </div>
@@ -225,6 +307,9 @@ function HomePage() {
               <p className="section-label">05 / HOW WE MOVE</p>
               <h2>Prove the value.<br />Then <em>compound it.</em></h2>
               <p className="process__intro">No months of theatre before something works. We choose a meaningful workflow, ship the smallest complete system, measure it, and expand from evidence.</p>
+              <div className="engagement-paths" aria-label="Ways to work with Axe">
+                <span>Workflow audit</span><span>Focused automation</span><span>Internal platform</span>
+              </div>
               <a className="text-link" href={`mailto:${contactEmail}?subject=Map%20my%20workflow`}>Map your first workflow <Arrow /></a>
             </div>
             <ol className="process-list">
@@ -250,27 +335,35 @@ function HomePage() {
 const jobs = [
   {
     title: 'Forward Deployed Engineer',
-    type: 'Engineering · Full-time',
+    type: 'Engineering',
     blurb: 'Work directly with clients, understand messy real-world operations, and turn them into reliable software at speed.',
     skills: ['Product thinking', 'Full-stack engineering', 'Client-facing ownership'],
+    responsibilities: ['Map real client workflows and identify the highest-leverage build.', 'Ship full-stack solutions and stay close through production rollout.', 'Translate technical decisions into clear business trade-offs.'],
+    profile: ['You move comfortably between users, systems, and code.', 'You can make progress with incomplete information without hiding risk.'],
   },
   {
     title: 'AI Automation Engineer',
-    type: 'AI & Automation · Full-time',
+    type: 'AI & Automation',
     blurb: 'Design agents, integrations, and resilient workflows that move business data and decisions safely.',
     skills: ['LLM systems', 'Workflow orchestration', 'APIs & integrations'],
+    responsibilities: ['Build multi-step automations across client tools and data.', 'Design evaluations, guardrails, retries, and human approval points.', 'Monitor reliability, cost, and output quality after launch.'],
+    profile: ['You understand where deterministic software should replace AI.', 'You treat edge cases and observability as product features.'],
   },
   {
     title: 'QA Engineer',
-    type: 'Quality · Full-time',
+    type: 'Quality',
     blurb: 'Build the test strategy and safeguards that keep high-speed delivery stable in production.',
     skills: ['Automation testing', 'Risk-based QA', 'Release confidence'],
+    responsibilities: ['Turn critical workflows into practical test strategies.', 'Build repeatable automated checks across UI, API, and integration layers.', 'Make failures easy to reproduce, prioritize, and prevent.'],
+    profile: ['You test around business risk, not only acceptance criteria.', 'You communicate precisely and challenge assumptions constructively.'],
   },
   {
-    title: 'Product Designer',
-    type: 'Design · Full-time',
+    title: 'Designer',
+    type: 'Product Design',
     blurb: 'Turn complex operational systems into interfaces that feel obvious, calm, and fast.',
     skills: ['Product UX', 'Visual systems', 'Prototyping'],
+    responsibilities: ['Observe workflows and turn complexity into clear interaction models.', 'Prototype, test, and refine internal tools and customer experiences.', 'Build visual systems that remain coherent as products grow.'],
+    profile: ['Your portfolio shows decisions and outcomes, not only polished screens.', 'You can collaborate directly with engineers and business users.'],
   },
 ]
 
@@ -278,7 +371,7 @@ function CareersPage() {
   return (
     <>
       <Nav page="careers" />
-      <main>
+      <main id="main-content">
         <section className="careers-hero">
           <div className="careers-orbit" aria-hidden="true"><i /><i /><i /><span>AXE</span></div>
           <div className="wrap careers-hero__content reveal">
@@ -314,6 +407,7 @@ function CareersPage() {
               <p className="section-label">OPEN POSITIONS / 04</p>
               <h2>Find your<br /><em>sharp edge.</em></h2>
             </div>
+            <p className="openings__context">Role location and engagement terms vary by project and are confirmed before the first interview.</p>
             <div className="job-list">
               {jobs.map((job, index) => (
                 <article className="job reveal" key={job.title}>
@@ -324,11 +418,24 @@ function CareersPage() {
                     <p className="job__blurb">{job.blurb}</p>
                     <div className="tag-row">{job.skills.map(skill => <span key={skill}>{skill}</span>)}</div>
                   </div>
-                  <a href={`mailto:careers@axeofficial.com?subject=Application%20—%20${encodeURIComponent(job.title)}`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
+                  <details className="job__details">
+                    <summary>Role details <span>+</span></summary>
+                    <div>
+                      <section>
+                        <h4>What you’ll do</h4>
+                        <ul>{job.responsibilities.map(item => <li key={item}>{item}</li>)}</ul>
+                      </section>
+                      <section>
+                        <h4>You’ll thrive here if</h4>
+                        <ul>{job.profile.map(item => <li key={item}>{item}</li>)}</ul>
+                      </section>
+                    </div>
+                  </details>
+                  <a href={`mailto:${careersEmail}?subject=Application%20—%20${encodeURIComponent(job.title)}&body=Please%20include%20your%20CV%20or%20portfolio%20and%20a%20short%20note%20about%20why%20this%20role%20fits.`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
                 </article>
               ))}
             </div>
-            <p className="openings__note">Don’t see your exact role? If you can make Axe sharper, write to <a href="mailto:careers@axeofficial.com">careers@axeofficial.com</a>.</p>
+            <p className="openings__note">Don’t see your exact role? If you can make Axe sharper, write to <a href={`mailto:${careersEmail}`}>{careersEmail}</a>.</p>
           </div>
         </section>
       </main>
@@ -338,17 +445,54 @@ function CareersPage() {
 }
 
 function Contact() {
+  const handleSubmit = event => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const body = [
+      `Name: ${data.get('name')}`,
+      `Company: ${data.get('company')}`,
+      `Work email: ${data.get('email')}`,
+      `Area: ${data.get('area')}`,
+      '',
+      'Workflow or bottleneck:',
+      data.get('bottleneck'),
+    ].join('\n')
+
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(`Project brief — ${data.get('company')}`)}&body=${encodeURIComponent(body)}`
+  }
+
   return (
     <section className="contact section" id="contact">
       <div className="contact__glow" />
-      <div className="wrap contact__content reveal">
-        <p className="section-label">YOUR NEXT BOTTLENECK</p>
-        <h2>Show us the work<br />your team <em>hates doing.</em></h2>
-        <p>We’ll help you identify the first workflow worth automating—based on time saved, risk removed, and value created.</p>
-        <a className="button button--lime" href={`mailto:${contactEmail}?subject=Let%27s%20automate%20this&body=The%20workflow%20I%20want%20to%20improve%20is%3A%0A%0A`}>
-          Start with one workflow <Arrow />
-        </a>
-        <span className="contact__reassurance">No hard sell. Just a useful first conversation.</span>
+      <div className="wrap contact__grid">
+        <div className="contact__content reveal">
+          <p className="section-label">YOUR NEXT BOTTLENECK</p>
+          <h2>Show us the work<br />your team <em>hates doing.</em></h2>
+          <p>We’ll help identify the first workflow worth automating—based on time saved, risk removed, and value created.</p>
+          <div className="contact__promise">
+            <span>01</span><p>A focused first conversation</p>
+            <span>02</span><p>A practical opportunity map</p>
+            <span>03</span><p>No obligation to build with us</p>
+          </div>
+        </div>
+        <form className="brief-form reveal" onSubmit={handleSubmit}>
+          <div className="field-row">
+            <label>Name<input name="name" autoComplete="name" required /></label>
+            <label>Work email<input name="email" type="email" autoComplete="email" required /></label>
+          </div>
+          <label>Company<input name="company" autoComplete="organization" required /></label>
+          <label>Where is the friction?
+            <select name="area" defaultValue="Operations">
+              <option>Operations</option><option>Finance</option><option>Customer service</option>
+              <option>Documents & data</option><option>Internal software</option><option>Something else</option>
+            </select>
+          </label>
+          <label>Describe the workflow
+            <textarea name="bottleneck" rows="4" placeholder="What happens today, and where does it slow down?" required />
+          </label>
+          <button className="button button--lime" type="submit">Prepare project brief <Arrow /></button>
+          <p className="brief-form__note">This opens your email app with the brief prepared. Nothing is uploaded or tracked.</p>
+        </form>
       </div>
     </section>
   )
@@ -358,16 +502,68 @@ function Footer() {
   return (
     <footer>
       <div className="wrap footer__top">
-        <a href="/" aria-label="Axe Official home"><img className="footer-logo" src="/brand/axe-full.svg" alt="Axe Official — Automation for real growth" /></a>
+        <a href="/" aria-label="Axe Official"><img className="footer-logo" src="/brand/axe-full.webp" alt="Axe Official — Automation for real growth" /></a>
         <p>AI-first software for<br />operations that refuse to stand still.</p>
-        <div><span>START A PROJECT</span><a href={`mailto:${contactEmail}`}>{contactEmail} <Arrow diagonal /></a></div>
+        <div className="footer__contacts">
+          <span>START A PROJECT</span><a href={`mailto:${contactEmail}`}>{contactEmail} <Arrow diagonal /></a>
+          <span>CLIENT SUPPORT</span><a href={`mailto:${supportEmail}`}>{supportEmail} <Arrow diagonal /></a>
+        </div>
       </div>
       <div className="wrap footer__bottom">
         <span>© {new Date().getFullYear()} AXE OFFICIAL</span>
-        <div><a href={instagramUrl} target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="/careers.html">CAREERS</a></div>
+        <div><a href={instagramUrl} target="_blank" rel="noreferrer">INSTAGRAM / axe.0fficial ↗</a><a href="/careers.html">CAREERS</a><a href="/privacy.html">PRIVACY</a><a href="/terms.html">TERMS</a></div>
         <span>axeofficial.com</span>
       </div>
     </footer>
+  )
+}
+
+const legalContent = {
+  privacy: {
+    eyebrow: 'PRIVACY',
+    title: 'Clear systems need clear boundaries.',
+    intro: 'This notice explains what happens when you visit Axe Official online or contact us about a project.',
+    sections: [
+      ['Information you choose to share', 'When you email Axe Official, you may provide your name, work email, company, project details, CV, or portfolio. We use that information only to respond, evaluate the request, and continue the conversation you initiated.'],
+      ['Website data', 'This website does not currently use advertising trackers, analytics cookies, or an on-site database for inquiry forms. The project brief opens your own email application; it does not upload form content to the website. Our hosting provider may process standard security and access logs.'],
+      ['How information is handled', 'Access is limited to the people who need it for project or recruitment conversations. We retain correspondence only as long as it remains useful for that purpose or is required for legitimate business and legal records.'],
+      ['External services', 'Links to Instagram and client websites take you to third-party services governed by their own privacy terms. Axe Official does not control those services.'],
+      ['Your choices', `You can ask about, correct, or request deletion of information you sent us by writing to ${supportEmail}.`],
+    ],
+  },
+  terms: {
+    eyebrow: 'TERMS',
+    title: 'The website is the introduction—not the contract.',
+    intro: 'These terms cover use of the Axe Official website. Project work is governed by a separate written agreement.',
+    sections: [
+      ['Website use', 'You may use this website to learn about Axe Official, review open roles, and contact us. Do not attempt to disrupt the site, misuse its content, or access systems without authorization.'],
+      ['Project information', 'Services, processes, and outcomes shown here describe our capabilities and selected past work. Every engagement depends on scope, data, integrations, and operating conditions. A proposal or project agreement defines the actual deliverables.'],
+      ['Case-study outcomes', 'Results are presented from the information available for the relevant project and should not be treated as a guarantee that another business will achieve the same outcome.'],
+      ['Intellectual property', 'The Axe Official name, visual identity, website design, and original content belong to Axe Official unless another owner is identified. Client names and third-party marks belong to their respective owners.'],
+      ['Questions', `For website or service questions, contact ${contactEmail}. For support, contact ${supportEmail}.`],
+    ],
+  },
+}
+
+function LegalPage({ type }) {
+  const content = legalContent[type]
+  return (
+    <>
+      <Nav page="legal" />
+      <main id="main-content" className="legal">
+        <div className="wrap legal__hero">
+          <p className="eyebrow"><span>{content.eyebrow}</span><span>LAST UPDATED 10 SEPTEMBER 2026</span></p>
+          <h1>{content.title}</h1>
+          <p>{content.intro}</p>
+        </div>
+        <div className="wrap legal__body">
+          {content.sections.map(([title, text], index) => (
+            <section key={title}><span>0{index + 1}</span><div><h2>{title}</h2><p>{text}</p></div></section>
+          ))}
+        </div>
+      </main>
+      <Footer />
+    </>
   )
 }
 
@@ -381,7 +577,10 @@ export default function App() {
     return () => observer.disconnect()
   }, [])
 
-  return document.body.dataset.page === 'careers' ? <CareersPage /> : <HomePage />
+  const page = document.body.dataset.page
+  if (page === 'careers') return <CareersPage />
+  if (page === 'privacy' || page === 'terms') return <LegalPage type={page} />
+  return <HomePage />
 }
 
 createRoot(document.getElementById('root')).render(
