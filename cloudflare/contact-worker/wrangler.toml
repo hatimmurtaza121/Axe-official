@@ -1,0 +1,11 @@
+name = "axe-contact"
+main = "src/index.js"
+compatibility_date = "2026-09-10"
+
+[vars]
+TO_ADDRESS = "vendoraxe@gmail.com"
+FROM_ADDRESS = "noreply@axeofficial.com"
+
+[[send_email]]
+name = "SEB"
+destination_address = "vendoraxe@gmail.com"
