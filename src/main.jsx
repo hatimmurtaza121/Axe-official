@@ -612,7 +612,8 @@ export default function App() {
     )
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
     const hashFrame = requestAnimationFrame(() => {
-      const target = window.location.hash && document.getElementById(window.location.hash.slice(1))
+      const hashId = window.location.hash.slice(1)
+      const target = hashId ? document.getElementById(hashId) : null
       target?.scrollIntoView()
     })
     return () => {
