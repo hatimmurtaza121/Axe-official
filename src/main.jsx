@@ -160,7 +160,7 @@ function HomePage() {
       <Nav />
       <main id="main-content">
         <section className="hero">
-          <img className="hero__art" src={heroArtwork} alt="" />
+          <img className="hero__art" src={heroArtwork} alt="" width="1280" height="720" fetchPriority="high" />
           <SignalField />
           <div className="hero__wash" />
           <div className="wrap hero__grid">
@@ -306,8 +306,8 @@ function HomePage() {
                 </div>
                 <figure>
                   <div className="case-gallery">
-                    <img src={vendorAxeScreenshot} alt="Vendor Axe product website showing its inventory command center" />
-                    <img src={vendorAxeModules} alt="Vendor Axe subscription plans listing ERP modules" />
+                    <img src={vendorAxeScreenshot} alt="Vendor Axe product website showing its inventory command center" width="1440" height="900" loading="lazy" decoding="async" />
+                    <img src={vendorAxeModules} alt="Vendor Axe subscription plans listing ERP modules" width="1440" height="800" loading="lazy" decoding="async" />
                   </div>
                   <figcaption>Live Vendor Axe product pages · September 2026</figcaption>
                 </figure>
