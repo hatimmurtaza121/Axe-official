@@ -26,7 +26,7 @@ This repository contains the public website plus a small Cloudflare Worker that 
 
 Recommended runtime:
 
-- Node.js 22.x
+- Node.js 24.x
 - npm 10 or newer
 
 Pages are statically generated at build time. Interactive pieces (navigation, contact form, reveal animations) hydrate as client components.

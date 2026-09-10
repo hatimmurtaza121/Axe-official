@@ -13,7 +13,7 @@ Older `.html` URLs redirect to these routes.
 
 ## Local development
 
-Requires Node.js 22.
+Requires Node.js 24.
 
 ```bash
 npm install
