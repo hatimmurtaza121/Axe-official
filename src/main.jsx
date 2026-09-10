@@ -611,7 +611,14 @@ export default function App() {
       { threshold: 0.12 },
     )
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
-    return () => observer.disconnect()
+    const hashFrame = requestAnimationFrame(() => {
+      const target = window.location.hash && document.getElementById(window.location.hash.slice(1))
+      target?.scrollIntoView()
+    })
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(hashFrame)
+    }
   }, [])
 
   const page = document.body.dataset.page
