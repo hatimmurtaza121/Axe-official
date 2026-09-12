@@ -1,9 +1,12 @@
-import { jobs, site } from '@/lib/site'
+import { jobs } from '@/lib/site'
+import { ApplyForm } from './ApplyForm'
 import { Arrow } from './Arrow'
+import { HashScroll } from './HashScroll'
 
 export function CareersPage() {
   return (
     <main id="main-content">
+      <HashScroll />
       <section className="careers-hero">
         <div className="careers-orbit" aria-hidden="true">
           <div className="careers-orbit__ring"><i /><i /><i /></div>
@@ -38,17 +41,17 @@ export function CareersPage() {
 
       <section className="openings section" id="openings">
         <div className="wrap">
-          <div className="section-head section-head--light">
+          <div className="section-head section-head--light openings__head">
             <p className="section-label">OPEN POSITIONS / 04</p>
             <h2>Find your<br /><em>sharp edge.</em></h2>
           </div>
-          <p className="openings__context">Role location and engagement terms vary by project and are confirmed before the first interview.</p>
+          <p className="openings__context">Location is on each role. Engagement terms are confirmed before the first interview.</p>
           <div className="job-list">
             {jobs.map((job, index) => (
               <article className="job reveal" key={job.title}>
                 <span className="job__number">0{index + 1}</span>
                 <div className="job__main">
-                  <p>{job.type}</p>
+                  <p>{job.type}<span className="job__place">{job.location}</span></p>
                   <h3>{job.title}</h3>
                   <p className="job__blurb">{job.blurb}</p>
                   <div className="tag-row">{job.skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
@@ -66,11 +69,18 @@ export function CareersPage() {
                     </section>
                   </div>
                 </details>
-                <a href={`mailto:${site.careersEmail}?subject=Application%20—%20${encodeURIComponent(job.title)}&body=Please%20include%20your%20CV%20or%20portfolio%20and%20a%20short%20note%20about%20why%20this%20role%20fits.`} aria-label={`Apply for ${job.title}`}>Apply <Arrow diagonal /></a>
+                <a className="job__apply" href={`/careers?role=${encodeURIComponent(job.title)}#apply`} aria-label={`Apply for ${job.title}`}>
+                  Apply <Arrow />
+                </a>
               </article>
             ))}
           </div>
-          <p className="openings__note">Don’t see your exact role? If you can make Axe sharper, write to <a href={`mailto:${site.careersEmail}`}>{site.careersEmail}</a>.</p>
+          <div className="apply-panel" id="apply">
+            <p className="section-label">APPLY</p>
+            <h3>Tell us how you’d make Axe sharper.</h3>
+            <p>Name, email, a role, your CV, and a short note. Add a portfolio or LinkedIn if you have one.</p>
+            <ApplyForm />
+          </div>
         </div>
       </section>
     </main>

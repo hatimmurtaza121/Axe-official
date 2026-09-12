@@ -21,6 +21,7 @@ export const jobs = [
   {
     title: 'Forward Deployed Engineer',
     type: 'Engineering',
+    location: 'Remote',
     blurb: 'Work directly with clients, understand messy real-world operations, and turn them into reliable software at speed.',
     skills: ['Product thinking', 'Full-stack engineering', 'Client-facing ownership'],
     responsibilities: [
@@ -36,6 +37,7 @@ export const jobs = [
   {
     title: 'AI Automation Engineer',
     type: 'AI & Automation',
+    location: 'Hybrid',
     blurb: 'Design agents, integrations, and resilient workflows that move business data and decisions safely.',
     skills: ['LLM systems', 'Workflow orchestration', 'APIs & integrations'],
     responsibilities: [
@@ -51,6 +53,7 @@ export const jobs = [
   {
     title: 'QA Engineer',
     type: 'Quality',
+    location: 'Remote',
     blurb: 'Build the test strategy and safeguards that keep high-speed delivery stable in production.',
     skills: ['Automation testing', 'Risk-based QA', 'Release confidence'],
     responsibilities: [
@@ -66,6 +69,7 @@ export const jobs = [
   {
     title: 'Designer',
     type: 'Product Design',
+    location: 'Remote',
     blurb: 'Turn complex operational systems into interfaces that feel obvious, calm, and fast.',
     skills: ['Product UX', 'Visual systems', 'Prototyping'],
     responsibilities: [
