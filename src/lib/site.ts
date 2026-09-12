@@ -6,13 +6,14 @@ export const site = {
   supportEmail: 'support@axeofficial.com',
   careersEmail: 'careers@axeofficial.com',
   instagramUrl: 'https://instagram.com/axe.0fficial',
+  copyrightYear: 2026,
 } as const
 
 export const volumeOptions = [
-  'Under 100',
-  '100–1,000',
-  '1,000–10,000',
-  'More than 10,000',
+  'Under 100 operations / month',
+  '100–1,000 / month',
+  '1,000–10,000 / month',
+  'More than 10,000 / month',
   'Not sure yet',
 ] as const
 

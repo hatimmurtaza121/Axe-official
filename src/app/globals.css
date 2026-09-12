@@ -258,7 +258,8 @@ h1 em, h2 em { color: var(--lime); font-style: italic; font-weight: 400; font-fa
 .brief-form input, .brief-form textarea { width: 100%; margin-top: 7px; padding: 12px 0; border: 0; border-bottom: 1px solid rgba(8,11,18,.3); border-radius: 0; color: var(--ink); background: transparent; font: 400 13px/1.55 var(--font-manrope), sans-serif; }
 .brief-form textarea { min-height: 45px; max-height: 105px; overflow-y: hidden; resize: none; }
 .brief-form input:focus, .brief-form textarea:focus, .custom-select__trigger:focus { border-color: #2f5d00; }
-.brief-form input:focus-visible, .brief-form textarea:focus-visible, .custom-select__trigger:focus-visible, .brief-form__calendar:focus-visible {
+.brief-form input:focus-visible, .brief-form textarea:focus-visible { outline: none; }
+.custom-select__trigger:focus-visible, .brief-form__calendar:focus-visible {
   outline: 2px solid var(--lime);
   outline-offset: 4px;
 }
@@ -275,9 +276,20 @@ h1 em, h2 em { color: var(--lime); font-style: italic; font-weight: 400; font-fa
 .custom-select__menu button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; background: rgba(34,104,255,.09); }
 .custom-select__menu button[aria-selected="true"] { background: var(--lime); font-weight: 600; }
 .brief-form .button { width: 100%; border: 0; cursor: pointer; }
+.brief-form__confirm { min-height: 340px; display: flex; flex-direction: column; justify-content: center; }
+.brief-form__confirm .section-label { color: var(--lime-ink); }
+.brief-form__confirm h3 { margin: 14px 0 10px; font-size: 32px; letter-spacing: -.045em; font-weight: 500; text-transform: none; }
+.brief-form__confirm > p:not(.section-label) { margin: 0 0 28px; max-width: 340px; color: rgba(8,11,18,.62); font: 400 14px/1.6 var(--font-manrope), sans-serif; letter-spacing: 0; text-transform: none; }
+.brief-form__confirm:focus { outline: none; }
+.brief-form__confirm:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
+.brief-form__banner { margin: 0 0 16px; padding: 14px 16px; text-align: left; border: 1px solid transparent; }
+.brief-form__banner:focus { outline: none; }
+.brief-form__banner:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
+.brief-form__banner strong { display: block; margin-bottom: 4px; font-size: 13px; letter-spacing: 0; text-transform: none; }
+.brief-form__banner p { margin: 0; font: 400 12px/1.5 var(--font-manrope), sans-serif; letter-spacing: 0; text-transform: none; }
+.brief-form__banner.is-success { color: #3d4f00; background: #f4ffc4; border-color: #7a9600; }
+.brief-form__banner.is-error { color: #8a1f1a; background: #fdecea; border-color: #c62828; }
 .brief-form__note { margin: 12px 0 0; color: rgba(8,11,18,.65); font-size: 12px; line-height: 1.5; text-align: center; }
-.brief-form__status { margin: 12px 0 0; color: #2f5d00; font: 500 12px/1.5 var(--font-manrope), sans-serif; text-align: center; }
-.brief-form__status.is-error { color: #9f2f26; }
 .brief-form .button:disabled, .brief-form__calendar:disabled { opacity: .6; cursor: wait; }
 .honeypot { position: absolute; left: -9999px; height: 0; width: 0; overflow: hidden; }
 .brief-form__calendar { margin-top: 15px; display: flex; justify-content: center; gap: 9px; width: 100%; border: 0; background: transparent; color: rgba(8,11,18,.72); font-size: 12px; text-align: center; cursor: pointer; }

@@ -2,8 +2,16 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { emailPattern, isValidPhone, type ContactIntent } from '@/lib/contact'
-import { volumeOptions } from '@/lib/site'
+import { site, volumeOptions } from '@/lib/site'
 import { Arrow } from './Arrow'
+
+function publicStatusMessage(status: number, error?: string) {
+  if (status === 503) {
+    return `We could not deliver the brief just now. Email ${site.contactEmail} and we’ll pick it up.`
+  }
+  if (error && !/configured|worker|secret/i.test(error)) return error
+  return 'We could not send the brief. Please try again.'
+}
 
 type FieldName = 'name' | 'email' | 'phone' | 'company' | 'bottleneck'
 
@@ -75,6 +83,13 @@ export function Contact() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
+  const [statusTitle, setStatusTitle] = useState('')
+  const [volumeKey, setVolumeKey] = useState(0)
+  const statusRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (status === 'sent' || status === 'error') statusRef.current?.focus()
+  }, [status, statusMessage])
 
   const clearError = (field: FieldName) => {
     setErrors((current) => {
@@ -117,6 +132,7 @@ export function Contact() {
     setErrors({})
     setStatus('sending')
     setStatusMessage('')
+    setStatusTitle('')
 
     try {
       const response = await fetch('/api/contact', {
@@ -137,17 +153,21 @@ export function Contact() {
 
       if (!response.ok) {
         setStatus('error')
-        setStatusMessage(result.error || 'We could not send the brief. Please try again.')
+        setStatusTitle('Could not send')
+        setStatusMessage(publicStatusMessage(response.status, result.error))
         return
       }
 
       setStatus('sent')
+      setStatusTitle(intent === 'calendar' ? 'Request sent' : 'Brief sent')
       setStatusMessage(intent === 'calendar'
-        ? 'Request sent. We’ll reply with a calendar link.'
-        : 'Brief sent. We’ll review it and get back to you.')
+        ? 'We’ll reply with a calendar link so you can pick a time.'
+        : 'We’ll review the workflow and get back to you.')
       form.reset()
+      setVolumeKey((current) => current + 1)
     } catch {
       setStatus('error')
+      setStatusTitle('Could not send')
       setStatusMessage('We could not send the brief. Please try again.')
     }
   }
@@ -172,80 +192,107 @@ export function Contact() {
           </div>
         </div>
         <form className="brief-form reveal" onSubmit={handleSubmit} noValidate>
-          <div className="field-row">
-            <label>Name
-              <input name="name" autoComplete="name" placeholder="Jordan Hale" required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} onInput={() => clearError('name')} />
-              {errors.name && <span className="field-error" id="name-error">{errors.name}</span>}
-            </label>
-            <label>Work email
-              <input name="email" type="email" autoComplete="email" placeholder="jordan@company.com" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} onInput={() => clearError('email')} />
-              {errors.email && <span className="field-error" id="email-error">{errors.email}</span>}
-            </label>
-          </div>
-          <div className="field-row">
-            <label>Company
-              <input name="company" autoComplete="organization" placeholder="Northstar Logistics" required aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? 'company-error' : undefined} onInput={() => clearError('company')} />
-              {errors.company && <span className="field-error" id="company-error">{errors.company}</span>}
-            </label>
-            <label>Phone <span className="field-optional">optional</span>
-              <input
-                name="phone"
-                type="tel"
-                autoComplete="tel"
-                inputMode="tel"
-                placeholder="+1 415 555 0132"
-                aria-invalid={Boolean(errors.phone)}
-                aria-describedby={errors.phone ? 'phone-error' : undefined}
-                onInput={() => clearError('phone')}
-              />
-              {errors.phone && <span className="field-error" id="phone-error">{errors.phone}</span>}
-            </label>
-          </div>
-          <div className="field">
-            <span id="volume-label">Approximate monthly volume</span>
-            <VolumeSelect />
-          </div>
-          <label>Describe the workflow
-            <textarea
-              name="bottleneck"
-              rows={1}
-              placeholder="What happens today, and where does it slow down?"
-              required
-              aria-invalid={Boolean(errors.bottleneck)}
-              aria-describedby={errors.bottleneck ? 'bottleneck-error' : undefined}
-              onInput={(event) => {
-                clearError('bottleneck')
-                const field = event.currentTarget
-                const lineHeight = Number.parseFloat(getComputedStyle(field).lineHeight)
-                const maxHeight = (lineHeight * 4) + 24
-                field.style.height = 'auto'
-                field.style.height = `${Math.min(field.scrollHeight, maxHeight)}px`
-                field.style.overflowY = field.scrollHeight > maxHeight ? 'auto' : 'hidden'
-              }}
-            />
-            {errors.bottleneck && <span className="field-error" id="bottleneck-error">{errors.bottleneck}</span>}
-          </label>
-          <input className="honeypot" name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-          <button className="button button--lime" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending brief' : 'Prepare project brief'} <Arrow />
-          </button>
-          {statusMessage && (
-            <p className={`brief-form__status ${status === 'error' ? 'is-error' : ''}`} role="status">
-              {statusMessage}
-            </p>
+          {status === 'sent' ? (
+            <div className="brief-form__confirm" ref={statusRef} role="status" tabIndex={-1}>
+              <p className="section-label">RECEIVED</p>
+              <h3>{statusTitle}</h3>
+              <p>{statusMessage}</p>
+              <button
+                className="button button--lime"
+                type="button"
+                onClick={() => {
+                  setStatus('idle')
+                  setStatusMessage('')
+                  setStatusTitle('')
+                }}
+              >
+                Send another brief <Arrow />
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="field-row">
+                <label>Name
+                  <input name="name" autoComplete="name" placeholder="Jordan Hale" required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'name-error' : undefined} onInput={() => clearError('name')} />
+                  {errors.name && <span className="field-error" id="name-error">{errors.name}</span>}
+                </label>
+                <label>Work email
+                  <input name="email" type="email" autoComplete="email" placeholder="jordan@company.com" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined} onInput={() => clearError('email')} />
+                  {errors.email && <span className="field-error" id="email-error">{errors.email}</span>}
+                </label>
+              </div>
+              <div className="field-row">
+                <label>Company
+                  <input name="company" autoComplete="organization" placeholder="Northstar Logistics" required aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? 'company-error' : undefined} onInput={() => clearError('company')} />
+                  {errors.company && <span className="field-error" id="company-error">{errors.company}</span>}
+                </label>
+                <label>Phone <span className="field-optional">optional</span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    placeholder="+1 415 555 0132"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? 'phone-error' : undefined}
+                    onInput={() => clearError('phone')}
+                  />
+                  {errors.phone && <span className="field-error" id="phone-error">{errors.phone}</span>}
+                </label>
+              </div>
+              <div className="field">
+                <span id="volume-label">Approximate monthly volume</span>
+                <VolumeSelect key={volumeKey} />
+              </div>
+              <label>Describe the workflow
+                <textarea
+                  name="bottleneck"
+                  rows={1}
+                  placeholder="What happens today, and where does it slow down?"
+                  required
+                  aria-invalid={Boolean(errors.bottleneck)}
+                  aria-describedby={errors.bottleneck ? 'bottleneck-error' : undefined}
+                  onInput={(event) => {
+                    clearError('bottleneck')
+                    const field = event.currentTarget
+                    const lineHeight = Number.parseFloat(getComputedStyle(field).lineHeight)
+                    const maxHeight = (lineHeight * 4) + 24
+                    field.style.height = 'auto'
+                    field.style.height = `${Math.min(field.scrollHeight, maxHeight)}px`
+                    field.style.overflowY = field.scrollHeight > maxHeight ? 'auto' : 'hidden'
+                  }}
+                />
+                {errors.bottleneck && <span className="field-error" id="bottleneck-error">{errors.bottleneck}</span>}
+              </label>
+              <input className="honeypot" name="website" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              {status === 'error' && statusMessage && (
+                <div
+                  ref={statusRef}
+                  className="brief-form__banner is-error"
+                  role="status"
+                  tabIndex={-1}
+                >
+                  <strong>{statusTitle}</strong>
+                  <p>{statusMessage}</p>
+                </div>
+              )}
+              <button className="button button--lime" type="submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending brief' : 'Prepare project brief'} <Arrow />
+              </button>
+              <p className="brief-form__note">Your brief is sent to Axe Official. Nothing is used for ads or tracking.</p>
+              <button
+                className="brief-form__calendar"
+                type="button"
+                disabled={status === 'sending'}
+                onClick={(event) => {
+                  const form = event.currentTarget.form
+                  if (form) void sendBrief(form, 'calendar')
+                }}
+              >
+                Prefer to choose a time? Request the calendar link <Arrow diagonal />
+              </button>
+            </>
           )}
-          <p className="brief-form__note">Your brief is sent to Axe Official. Nothing is used for ads or tracking.</p>
-          <button
-            className="brief-form__calendar"
-            type="button"
-            disabled={status === 'sending'}
-            onClick={(event) => {
-              const form = event.currentTarget.form
-              if (form) void sendBrief(form, 'calendar')
-            }}
-          >
-            Prefer to choose a time? Request the calendar link <Arrow diagonal />
-          </button>
         </form>
       </div>
     </section>

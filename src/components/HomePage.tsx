@@ -140,7 +140,7 @@ export function HomePage() {
               <article className="case case--small case--visual reveal">
                 <div className="case__topline"><span>ANONYMIZED CLIENT / PRIVATE AI INFRASTRUCTURE</span><span>CASE 003</span></div>
                 <h3>Computer vision,<br />kept close to the data.</h3>
-                <p>A visual challenge-recognition system deployed on a client-managed local GPU for private, low-latency inference. Its public description intentionally excludes third-party access-control bypass details.</p>
+                <p>A computer-vision system that runs on a client-owned GPU, so inference stays private and fast. Implementation details stay off this public page.</p>
                 <div className="vision-grid" aria-hidden="true">{Array.from({ length: 24 }).map((_, i) => <i key={i} />)}</div>
               </article>
             </div>

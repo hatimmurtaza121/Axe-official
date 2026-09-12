@@ -17,7 +17,7 @@ export function Footer() {
         </div>
       </div>
       <div className="wrap footer__bottom">
-        <span>© {new Date().getFullYear()} AXE OFFICIAL</span>
+        <span>© {site.copyrightYear} AXE OFFICIAL</span>
         <div>
           <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">INSTAGRAM / axe.0fficial ↗</a>
           <Link href="/careers">CAREERS</Link>
