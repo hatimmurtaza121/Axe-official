@@ -55,7 +55,7 @@ export function Nav() {
     const syncActive = () => {
       frame = 0
       if (lockRef.current) return
-      const marker = 100
+      const marker = 72
       let next = ''
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= marker) next = `#${section.id}`
@@ -145,16 +145,16 @@ export function Nav() {
 
   useEffect(() => {
     const line = lineRef.current
-    const menu = menuRef.current
+    const track = line?.parentElement
     const target = isCareers ? careersRef.current : isWork ? workRef.current : isServices ? servicesRef.current : null
-    if (!line || !menu) return undefined
+    if (!line || !track) return undefined
 
     const place = (animate: boolean) => {
       if (!target || open) {
         line.style.opacity = '0'
         return
       }
-      const menuBox = menu.getBoundingClientRect()
+      const menuBox = track.getBoundingClientRect()
       const box = target.getBoundingClientRect()
       if (!animate) line.style.transition = 'none'
       line.style.width = `${box.width}px`
@@ -197,36 +197,38 @@ export function Nav() {
           aria-modal={open || undefined}
           aria-label={open ? 'Site menu' : undefined}
         >
-          <span className="nav__line" ref={lineRef} aria-hidden="true" />
-          <Link
-            ref={servicesRef}
-            href="/#services"
-            scroll={false}
-            className={isServices ? 'is-current' : undefined}
-            aria-current={isServices ? 'location' : undefined}
-            onClick={() => mark('#services')}
-          >
-            What we build
-          </Link>
-          <Link
-            ref={workRef}
-            href="/#work"
-            scroll={false}
-            className={isWork ? 'is-current' : undefined}
-            aria-current={isWork ? 'location' : undefined}
-            onClick={() => mark('#work')}
-          >
-            Selected work
-          </Link>
-          <Link
-            ref={careersRef}
-            href="/careers"
-            className={isCareers ? 'is-current' : undefined}
-            aria-current={isCareers ? 'page' : undefined}
-            onClick={closeMenu}
-          >
-            Careers
-          </Link>
+          <div className="nav__primary">
+            <span className="nav__line" ref={lineRef} aria-hidden="true" />
+            <Link
+              ref={servicesRef}
+              href="/#services"
+              scroll={false}
+              className={isServices ? 'is-current' : undefined}
+              aria-current={isServices ? 'location' : undefined}
+              onClick={() => mark('#services')}
+            >
+              What we build
+            </Link>
+            <Link
+              ref={workRef}
+              href="/#work"
+              scroll={false}
+              className={isWork ? 'is-current' : undefined}
+              aria-current={isWork ? 'location' : undefined}
+              onClick={() => mark('#work')}
+            >
+              Selected work
+            </Link>
+            <Link
+              ref={careersRef}
+              href="/careers"
+              className={isCareers ? 'is-current' : undefined}
+              aria-current={isCareers ? 'page' : undefined}
+              onClick={closeMenu}
+            >
+              Careers
+            </Link>
+          </div>
           <Link
             className={`nav__cta${isContact ? ' is-current' : ''}`}
             href="/#contact"

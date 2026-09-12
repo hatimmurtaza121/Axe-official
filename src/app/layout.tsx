@@ -34,14 +34,14 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: site.name,
     title: 'Axe Official — Operations, engineered to move.',
-    description: 'Secure AI automation, internal tools, and scalable software built around how your business actually works.',
+    description: 'AI automation, internal tools, and software that take grind out of real operations.',
     url: '/',
-    images: [{ url: '/brand/axe-og.webp' }],
+    images: [{ url: '/brand/axe-og.webp', width: 1200, height: 630, alt: 'Axe Official' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Axe Official — Operations, engineered to move.',
-    description: 'Secure AI automation, internal tools, and scalable software for operations that refuse to stand still.',
+    description: 'AI automation, internal tools, and software that take grind out of real operations.',
     images: ['/brand/axe-og.webp'],
   },
   robots: { index: true, follow: true },
@@ -66,7 +66,7 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${dmMono.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${manrope.variable} ${dmMono.variable} js-reveal`} data-scroll-behavior="smooth">
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <ScrollReset />
