@@ -5,7 +5,10 @@ export function CareersPage() {
   return (
     <main id="main-content">
       <section className="careers-hero">
-        <div className="careers-orbit" aria-hidden="true"><i /><i /><i /><span>AXE</span></div>
+        <div className="careers-orbit" aria-hidden="true">
+          <div className="careers-orbit__ring"><i /><i /><i /></div>
+          <div className="careers-orbit__core"><span>AXE</span></div>
+        </div>
         <div className="wrap careers-hero__content">
           <p className="eyebrow"><span>CAREERS AT AXE</span><span>BUILD WHAT MOVES BUSINESS</span></p>
           <h1>For people who<br />move <em>fast</em> and<br />think <em>deep.</em></h1>
