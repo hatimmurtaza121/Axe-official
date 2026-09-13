@@ -14,7 +14,7 @@ export function SignalField() {
     <svg className="signal-field" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
         <linearGradient id="signal-gradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#2268ff" />
+          <stop offset="0%" stopColor="#0060F0" />
           <stop offset="52%" stopColor="#68a6ff" />
           <stop offset="100%" stopColor="#dfff64" />
         </linearGradient>

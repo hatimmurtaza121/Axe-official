@@ -5,6 +5,7 @@ import vendorAxeModules from '@/assets/vendor-axe-modules.webp'
 import { Arrow } from './Arrow'
 import { Contact } from './Contact'
 import { HashScroll } from './HashScroll'
+import { PrincipleArt } from './PrincipleArt'
 import { SignalField } from './SignalField'
 import { WorkflowVisual } from './WorkflowVisual'
 
@@ -177,14 +178,17 @@ export function HomePage() {
               <h2>Fast is useful.<br /><em>Durable is better.</em></h2>
             </div>
             <div className="principle-grid">
-              {[
-                ['01', 'Controlled automation', 'Automate the repeatable. Keep people in control of decisions that carry risk, money, or nuance.'],
-                ['02', 'Secure & confidential', 'Access, data boundaries, auditability, and agreed confidentiality controls are designed before launch.'],
-                ['03', 'Tested & monitored', 'Critical paths get automated checks, release review, monitoring, and recovery-ready backups where required.'],
-                ['04', 'Owned & supported', 'Documented logic, handover-ready systems, no mystery lock-in, and an option for ongoing post-launch support.'],
-              ].map(([n, title, text]) => (
+              {([
+                { n: '01', kind: 'control' as const, title: 'Controlled automation', text: 'Automate the repeatable. Keep people in control of decisions that carry risk, money, or nuance.' },
+                { n: '02', kind: 'secure' as const, title: 'Secure & confidential', text: 'Access, data boundaries, auditability, and agreed confidentiality controls are designed before launch.' },
+                { n: '03', kind: 'tested' as const, title: 'Tested & monitored', text: 'Critical paths get automated checks, release review, monitoring, and recovery-ready backups where required.' },
+                { n: '04', kind: 'owned' as const, title: 'Owned & supported', text: 'Documented logic, handover-ready systems, no mystery lock-in, and an option for ongoing post-launch support.' },
+              ]).map(({ n, kind, title, text }) => (
                 <article key={title} className="principle reveal">
-                  <span>{n}</span><h3>{title}</h3><p>{text}</p>
+                  <span>{n}</span>
+                  <PrincipleArt kind={kind} />
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </article>
               ))}
             </div>
