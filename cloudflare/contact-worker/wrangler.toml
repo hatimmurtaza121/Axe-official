@@ -3,9 +3,9 @@ main = "src/index.js"
 compatibility_date = "2026-09-10"
 
 [vars]
-TO_ADDRESS = "vendoraxe@gmail.com"
+TO_ADDRESS = "axeofficial121@gmail.com"
 FROM_ADDRESS = "noreply@axeofficial.com"
 
 [[send_email]]
 name = "SEB"
-destination_address = "vendoraxe@gmail.com"
+destination_address = "axeofficial121@gmail.com"
