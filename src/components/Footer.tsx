@@ -8,7 +8,7 @@ export function Footer() {
     <footer>
       <div className="wrap footer__top">
         <Link href="/" aria-label="Axe Official">
-          <Image className="footer-logo" src="/brand/axe-full.webp" alt="Axe Official — Automation for real growth" width={120} height={110} />
+          <Image className="footer-logo" src="/brand/axe-full.webp" alt="Axe Official — Automation for real growth" width={380} height={354} />
         </Link>
         <p>AI-first software for<br />operations that refuse to stand still.</p>
         <div className="footer__contacts">

@@ -29,7 +29,13 @@ export const metadata: Metadata = {
   },
   description: 'Axe Official builds secure AI automation, internal tools, and scalable software that turn slow operations into high-speed systems.',
   applicationName: site.name,
-  icons: { icon: '/brand/favicon-64.png' },
+  icons: {
+    icon: [
+      { url: '/brand/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/brand/favicon-64.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: [{ url: '/brand/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   openGraph: {
     type: 'website',
     siteName: site.name,
