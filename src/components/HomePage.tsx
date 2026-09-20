@@ -18,7 +18,7 @@ export function HomePage() {
           <div className="hero__wash" />
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <p className="eyebrow"><span>AI-FIRST SOFTWARE HOUSE</span><span>BUILDING GLOBALLY</span></p>
+              <p className="eyebrow"><span>SOFTWARE <br className="eyebrow__br" />HOUSE</span><span>BUILDING <br className="eyebrow__br" />GLOBALLY</span></p>
               <h1>Operations,<br /><em>engineered</em><br />to move.</h1>
               <p className="hero__lede">We turn manual, fragile workflows into secure software that runs fast, scales cleanly, and gives your team time back.</p>
               <div className="hero__actions">
