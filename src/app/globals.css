@@ -95,7 +95,6 @@ a:hover .arrow { transform: translateX(4px); }
 .hero__grid { position: relative; z-index: 2; min-height: 650px; padding: 78px 0 54px; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 80px; }
 .eyebrow { margin: 0 0 40px; display: flex; gap: 20px; font: 400 12px/1.2 var(--mono); letter-spacing: .14em; color: rgba(248,246,237,.65); }
 .eyebrow span + span { padding-left: 20px; border-left: 1px solid rgba(248,246,237,.3); }
-.eyebrow__br { display: none; }
 .hero h1, .careers-hero h1 { margin: 0; font-size: clamp(58px, 7.1vw, 108px); line-height: .87; letter-spacing: -.075em; font-weight: 500; }
 h1 em, h2 em { color: var(--lime); font-style: italic; font-weight: 400; font-family: Georgia, serif; }
 .hero__lede { max-width: 590px; margin: 36px 0 0; font-size: 17px; line-height: 1.65; color: rgba(248,246,237,.72); }
@@ -436,9 +435,8 @@ footer { padding: 70px 0 25px; color: var(--paper); background: var(--ink); }
   .wrap { width: calc(100% - 28px); }
   .hero h1, .careers-hero h1 { font-size: clamp(52px, 17vw, 74px); }
   .hero__grid { padding-top: 50px; }
-  .eyebrow { gap: 18px; margin-bottom: 28px; line-height: 1.7; }
-  .eyebrow span + span { padding-left: 18px; }
-  .eyebrow__br { display: block; }
+  .eyebrow { gap: 11px; margin-bottom: 28px; }
+  .eyebrow span + span { padding-left: 11px; }
   .hero__lede { font-size: 15px; }
   .hero__actions { align-items: stretch; flex-direction: column; gap: 18px; }
   .button { width: 100%; }
