@@ -17,10 +17,13 @@ export default function NotFound() {
           <span>ROUTE NOT FOUND</span>
         </p>
         <h1>This page isn’t on the map.</h1>
-        <p>The URL may be old, mistyped, or retired. Head home, browse open roles, or start a conversation.</p>
+        <p>The URL may be old, mistyped, or retired. Head home, browse products, or start a conversation.</p>
         <div className="not-found__actions">
           <Link className="button button--lime" href="/">
             Back home <Arrow />
+          </Link>
+          <Link className="text-link" href="/products">
+            Products <Arrow diagonal />
           </Link>
           <Link className="text-link" href="/careers">
             Careers <Arrow diagonal />

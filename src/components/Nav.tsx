@@ -19,6 +19,7 @@ export function Nav() {
   const lineRef = useRef<HTMLSpanElement>(null)
   const servicesRef = useRef<HTMLAnchorElement>(null)
   const workRef = useRef<HTMLAnchorElement>(null)
+  const productsRef = useRef<HTMLAnchorElement>(null)
   const careersRef = useRef<HTMLAnchorElement>(null)
   const lockRef = useRef('')
 
@@ -138,6 +139,7 @@ export function Nav() {
     }, 900)
   }
   const current = active || hash
+  const isProducts = pathname === '/products'
   const isCareers = pathname === '/careers'
   const isServices = isHome && current === '#services'
   const isWork = isHome && current === '#work'
@@ -146,7 +148,7 @@ export function Nav() {
   useEffect(() => {
     const line = lineRef.current
     const track = line?.parentElement
-    const target = isCareers ? careersRef.current : isWork ? workRef.current : isServices ? servicesRef.current : null
+    const target = isProducts ? productsRef.current : isCareers ? careersRef.current : isWork ? workRef.current : isServices ? servicesRef.current : null
     if (!line || !track) return undefined
 
     const place = (animate: boolean) => {
@@ -171,7 +173,7 @@ export function Nav() {
     const onResize = () => place(false)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [isCareers, isServices, isWork, open, pathname])
+  }, [isCareers, isProducts, isServices, isWork, open, pathname])
 
   return (
     <header className={`nav-shell${solid || open ? ' is-solid' : ''}`}>
@@ -218,6 +220,15 @@ export function Nav() {
               onClick={() => mark('#work')}
             >
               Selected work
+            </Link>
+            <Link
+              ref={productsRef}
+              href="/products"
+              className={isProducts ? 'is-current' : undefined}
+              aria-current={isProducts ? 'page' : undefined}
+              onClick={closeMenu}
+            >
+              Products
             </Link>
             <Link
               ref={careersRef}

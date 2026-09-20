@@ -1,7 +1,5 @@
 import Image from 'next/image'
 import heroArtwork from '@/assets/axe-automation-hero.webp'
-import vendorAxeScreenshot from '@/assets/vendor-axe-erp.webp'
-import vendorAxeModules from '@/assets/vendor-axe-modules.webp'
 import { Arrow } from './Arrow'
 import { Contact } from './Contact'
 import { HashScroll } from './HashScroll'
@@ -123,49 +121,15 @@ export function HomePage() {
                 </div>
               </div>
             </article>
-            <div className="case-grid">
-              <article className="case case--small reveal">
-                <div className="case__topline"><span>NOOR CHEMICALS / WATERPROOFING</span><span>CASE 002</span></div>
-                <h3>One operating system for sites, clients, and documents.</h3>
-                <dl className="case-facts">
-                  <div><dt>Problem</dt><dd>Site, client, data-entry, and document work was spread across manual processes.</dd></div>
-                  <div><dt>Solution</dt><dd>A full internal portal connected site and client management with automated entries and document generation.</dd></div>
-                  <div><dt>Timeline</dt><dd>Not publicly disclosed.</dd></div>
-                  <div><dt>Outcome</dt><dd>One repeatable operating flow with fewer manual steps and faster document handling.</dd></div>
-                </dl>
-                <a className="case-link" href="https://noorchemical.com/" target="_blank" rel="noopener noreferrer">Visit Noor Chemicals <Arrow diagonal /></a>
-                <div className="case-diagram" aria-hidden="true">
-                  <span>SITES</span><i /><span>AXE CORE</span><i /><span>CLIENTS</span>
+            <article className="case case--visual reveal">
+              <div className="case__topline"><span>ANONYMIZED CLIENT / PRIVATE AI INFRASTRUCTURE</span><span>CASE 002</span></div>
+              <div className="case__content">
+                <div className="case__story">
+                  <h3>Computer vision,<br />kept close to the data.</h3>
+                  <p>A computer-vision system that runs on a client-owned GPU, so inference stays private and fast. Implementation details stay off this public page.</p>
+                  <div className="tag-row"><span>COMPUTER VISION</span><span>PRIVATE AI</span><span>ON-PREM GPU</span></div>
                 </div>
-              </article>
-              <article className="case case--small case--visual reveal">
-                <div className="case__topline"><span>ANONYMIZED CLIENT / PRIVATE AI INFRASTRUCTURE</span><span>CASE 003</span></div>
-                <h3>Computer vision,<br />kept close to the data.</h3>
-                <p>A computer-vision system that runs on a client-owned GPU, so inference stays private and fast. Implementation details stay off this public page.</p>
                 <div className="vision-grid" aria-hidden="true">{Array.from({ length: 24 }).map((_, i) => <i key={i} />)}</div>
-              </article>
-            </div>
-            <article className="case case--product reveal">
-              <div className="case__topline"><span>VENDOR AXE / SUBSCRIPTION ERP</span><span>CASE 004</span></div>
-              <div className="case-product">
-                <div className="case-product__story">
-                  <p className="section-label">AXE-BUILT PRODUCT</p>
-                  <h3>Major ERP workflows.<br />One calm subscription.</h3>
-                  <dl className="case-facts">
-                    <div><dt>Problem</dt><dd>Shops, distributors, and makers need shared control of stock, orders, manufacturing, and money without assembling disconnected tools.</dd></div>
-                    <div><dt>Solution</dt><dd>A multi-tenant ERP spanning inventory, sales and purchasing, accounts, transactions, orders, returns, manufacturing, ledgers, reports, exports, and white-labeling.</dd></div>
-                    <div><dt>Delivery</dt><dd>An ongoing subscription product with guided onboarding and configurable modules.</dd></div>
-                    <div><dt>Outcome</dt><dd>A production PWA sold in Essentials, Complete, and Tailored plans, with tenant data isolated through row-level security.</dd></div>
-                  </dl>
-                  <a className="case-link" href="https://vendoraxe.com/" target="_blank" rel="noopener noreferrer">Explore Vendor Axe <Arrow diagonal /></a>
-                </div>
-                <figure>
-                  <div className="case-gallery">
-                    <Image src={vendorAxeScreenshot} alt="Vendor Axe product website showing its inventory command center" width={1440} height={900} sizes="(max-width: 900px) 100vw, 50vw" />
-                    <Image src={vendorAxeModules} alt="Vendor Axe subscription plans listing ERP modules" width={1440} height={800} sizes="(max-width: 900px) 100vw, 30vw" />
-                  </div>
-                  <figcaption>Live Vendor Axe product pages · September 2026</figcaption>
-                </figure>
               </div>
             </article>
           </div>

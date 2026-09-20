@@ -17,6 +17,20 @@ export const volumeOptions = [
   'Not sure yet',
 ] as const
 
+export const products = [
+  {
+    name: 'Vendor Axe',
+    category: 'Subscription ERP',
+    code: 'PRODUCT 001',
+    url: 'https://vendoraxe.com/',
+    tagline: ['Major ERP workflows.', 'One calm subscription.'],
+    problem: 'Shops, distributors, and makers need shared control of stock, orders, manufacturing, and money without assembling disconnected tools.',
+    solution: 'A multi-tenant ERP spanning inventory, sales and purchasing, accounts, transactions, orders, returns, manufacturing, ledgers, reports, exports, and white-labeling.',
+    delivery: 'An ongoing subscription product with guided onboarding and configurable modules.',
+    outcome: 'A production PWA sold in Essentials, Complete, and Tailored plans, with tenant data isolated through row-level security.',
+  },
+] as const
+
 export const jobs = [
   {
     title: 'Forward Deployed Engineer',
@@ -93,7 +107,7 @@ export const legalContent = {
       ['Information you choose to share', 'When you contact Axe Official, you may provide your name, work email, company, project details, CV, or portfolio. We use that information only to respond, evaluate the request, and continue the conversation you initiated.'],
       ['Website data', 'This website does not currently use advertising trackers or analytics cookies. If you submit the project brief, the details you enter are sent to Axe Official so we can reply. Our hosting provider may process standard security and access logs.'],
       ['How information is handled', 'Access is limited to the people who need it for project or recruitment conversations. We retain correspondence only as long as it remains useful for that purpose or is required for legitimate business and legal records.'],
-      ['External services', 'Links to Instagram and client websites take you to third-party services governed by their own privacy terms. Axe Official does not control those services.'],
+      ['External services', 'Links to Instagram and Axe product websites take you to third-party services governed by their own privacy terms. Axe Official does not control those services.'],
       ['Your choices', `You can ask about, correct, or request deletion of information you sent us by writing to ${site.supportEmail}.`],
     ],
   },

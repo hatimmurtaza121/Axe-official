@@ -20,6 +20,7 @@ export function Footer() {
         <span>© {site.copyrightYear} AXE OFFICIAL</span>
         <div>
           <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">INSTAGRAM / axe.0fficial ↗</a>
+          <Link href="/products">PRODUCTS</Link>
           <Link href="/careers">CAREERS</Link>
           <Link href="/privacy">PRIVACY</Link>
           <Link href="/terms">TERMS</Link>
