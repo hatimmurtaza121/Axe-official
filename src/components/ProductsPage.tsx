@@ -3,14 +3,12 @@ import vendorAxeScreenshot from '@/assets/vendor-axe-erp.webp'
 import vendorAxeModules from '@/assets/vendor-axe-modules.webp'
 import { products } from '@/lib/site'
 import { Arrow } from './Arrow'
-import { HashScroll } from './HashScroll'
 
 export function ProductsPage() {
   const [vendorAxe] = products
 
   return (
     <main id="main-content">
-      <HashScroll />
       <section className="careers-hero">
         <div className="careers-orbit" aria-hidden="true">
           <div className="careers-orbit__ring"><i /><i /><i /></div>

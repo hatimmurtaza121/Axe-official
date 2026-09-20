@@ -1,27 +1,51 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
-export function HashScroll() {
-  useEffect(() => {
-    const scrollToHash = () => {
-      const id = decodeURIComponent(window.location.hash.slice(1))
-      if (!id) return
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+let pendingHash = ''
 
-    const navigation = performance.getEntriesByType('navigation')[0]
-    const reloaded = navigation instanceof PerformanceNavigationTiming && navigation.type === 'reload'
-    const frame = reloaded ? 0 : requestAnimationFrame(scrollToHash)
-    const timeout = reloaded ? 0 : window.setTimeout(scrollToHash, 120)
+export function setPendingHash(id: string) {
+  pendingHash = id.startsWith('#') ? id : `#${id}`
+}
+
+function takePendingHash() {
+  const id = pendingHash
+  pendingHash = ''
+  return id
+}
+
+function scrollToHash() {
+  const pending = takePendingHash()
+  if (pending && window.location.hash !== pending) {
+    history.replaceState(null, '', pending)
+  }
+  const id = decodeURIComponent((window.location.hash || pending).slice(1))
+  if (!id) return false
+  const node = document.getElementById(id)
+  if (!node) {
+    if (pending) pendingHash = pending
+    return false
+  }
+  node.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  return true
+}
+
+export function HashScroll() {
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const delays = [0, 80, 200, 400]
+    const timers = delays.map((delay) => window.setTimeout(scrollToHash, delay))
+    const frame = requestAnimationFrame(scrollToHash)
     window.addEventListener('hashchange', scrollToHash)
 
     return () => {
       cancelAnimationFrame(frame)
-      window.clearTimeout(timeout)
+      timers.forEach(window.clearTimeout)
       window.removeEventListener('hashchange', scrollToHash)
     }
-  }, [])
+  }, [pathname])
 
   return null
 }

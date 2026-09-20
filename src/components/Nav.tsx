@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Arrow } from './Arrow'
+import { setPendingHash } from './HashScroll'
 import { Mark } from './Mark'
 
 export function Nav() {
@@ -133,7 +134,11 @@ export function Nav() {
     lockRef.current = id
     setActive(id)
     closeMenu()
-    document.getElementById(id.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (pathname === '/') {
+      document.getElementById(id.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      setPendingHash(id)
+    }
     window.setTimeout(() => {
       if (lockRef.current === id) lockRef.current = ''
     }, 900)

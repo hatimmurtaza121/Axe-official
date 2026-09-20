@@ -1,12 +1,10 @@
 import { jobs } from '@/lib/site'
 import { ApplyForm } from './ApplyForm'
 import { Arrow } from './Arrow'
-import { HashScroll } from './HashScroll'
 
 export function CareersPage() {
   return (
     <main id="main-content">
-      <HashScroll />
       <section className="careers-hero">
         <div className="careers-orbit" aria-hidden="true">
           <div className="careers-orbit__ring"><i /><i /><i /></div>

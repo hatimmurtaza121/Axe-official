@@ -2,7 +2,6 @@ import Image from 'next/image'
 import heroArtwork from '@/assets/axe-automation-hero.webp'
 import { Arrow } from './Arrow'
 import { Contact } from './Contact'
-import { HashScroll } from './HashScroll'
 import { PrincipleArt } from './PrincipleArt'
 import { SignalField } from './SignalField'
 import { WorkflowVisual } from './WorkflowVisual'
@@ -10,7 +9,6 @@ import { WorkflowVisual } from './WorkflowVisual'
 export function HomePage() {
   return (
     <>
-      <HashScroll />
       <main id="main-content">
         <section className="hero">
           <Image className="hero__art" src={heroArtwork} alt="" fill sizes="100vw" priority />

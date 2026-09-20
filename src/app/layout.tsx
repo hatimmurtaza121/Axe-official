@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Mono, Manrope } from 'next/font/google'
 import { Footer } from '@/components/Footer'
+import { HashScroll } from '@/components/HashScroll'
 import { Nav } from '@/components/Nav'
 import { RevealObserver } from '@/components/RevealObserver'
 import { ScrollReset } from '@/components/ScrollReset'
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <ScrollReset />
+        <HashScroll />
         <RevealObserver>
           <Nav />
           {children}
